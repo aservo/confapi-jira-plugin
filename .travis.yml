@@ -3,6 +3,11 @@ dist: trusty
 language: java
 jdk:
 - oraclejdk8
+addons:
+  sonarcloud:
+    organization: "800c9135c81800959e51375f6594c91a1f757be9bbbc14d311783a4f75c501ec7807da061e787a9ea89433eb1cf2d6088b664332abd6a411ca5b44e811e97a23"
+    token:
+      secure: dcA7GqopxHNPPLU1USOon+OgSX70gm7iPxfng8p2rGOIWWLbh7u3aqA177F1ZEf6UBPAhTqGEmTZ3UoSR6apDpPAugzWl56viSPuoBGZkCxBzDyJXwNGkXfyEOn/XoKykjGbLMduepTKLCMO/7ErVXrGAjW7P3JwuGnjQ0G7J/c8HG2LAHc5ccChjXyMamI8U+fLsEyKHnJU8bdOLRO5BBqSoETSaPU7AwpFwoCvYNzzzfeWdxFMfDWDDneeFxc7g4wURQCBuAo9BY02IorS5QJVYvACLIsqeT4pFM8/Kw2o4+XThrS29RUetC4iRsIB8o8JohvlRMQLhIrSzZrE3tRWcKSCS+tUfwnEWvx7zjklLmnsMgZ40t3UGUCEUczhmP29v6Mk2at8c3R/h94wdy7ppih+bqDhmXsseVv4pLV+bPbqe2tivHm7syQ2z9Y/rimtT/mYfPWoWESc7WZkKYAMyEResJ3he/Yp+uTR6TZP/4mFe4FQ0vhG+bM0/Agbr50kTzV+TNhTmiJbFPWlYXNeB2Qmbl9g/Cxyc+Q6wqG+cOngiOaFhFlhyxpBdgybLBjtn0Rzhkei8DeKwAJ0F2QiEaZnsrgX6n41xZalbsSg48LNDbW4T/EXobgppTP9eWaCPG6if81xE4vzJmnnEuGT6ynJKs84vLaYFy9WC2M=
 env:
   global:
   - secure: LnjMLiOMChK0EuC93ya4/yOTSm0zv/R9/a5a5ecg1tdnEZgBm58HmJo7q/VWeKRyti5u4zoVv7QQqeb6Z+Aho2mO8Fr6d2zGE9EQGdZZUoYOjLsXvp2+XDJqiMYvpueMEIicPu+KcwV/OBAgso5ZJiGPCwwr0otg60gdnNAAwJ3b964FgJ1aPzok6p41olIn8TvA5l4C6LLlhsyNxwE9yrHYGLIZWIAxFO19bOm14gXB6jxmqdzQiCPRexbHxxi4yRJ45rP9HYxs9+h5L2iMbEoC6STi3SvYyg3U7HTxGjPYM/9+LmabLKPZBfT5bmct/lF5JjXsDojW+XnpzmOGSvoCmBaBPzk6lU+A47V2MiEl3AeUDzg6zR/hYtMZKj606LgpYEZXW9H1LnZ/iyCwwU6NP5F0LTPKCZ1WS64u0T7riR8KuShFScPELkn63s+UlNQOCkfq3GMHsdtUCBbSiqbsKNozhrdE3CifupNklkh/IMb5hB/5HcOiCbpn4q++NvST0E6FYTew7ebQ45v+UoXAaRev+GzhUq4VQUHCfP5F2kQQh5Waa+bcx1A5HWxoFFUoFvbm1JbOHCCFRylZnstI7i6Xiwm93WldbfZStyDJ3n2d0Qo1UX6QxttwsJiFW8YDmGj2GGztC2aulFiI3MoASLQeSEolE9w1Bj8RJ+k=
@@ -14,6 +19,9 @@ cache:
     - $HOME/.m2
 before_install:
 - cp .settings.xml $HOME/.m2/settings.xml
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=aservo_jira-confapi-plugin
 after_success:
 - mvn coveralls:report
 before_deploy:
