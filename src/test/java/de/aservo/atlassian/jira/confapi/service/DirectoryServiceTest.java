@@ -4,7 +4,8 @@ import com.atlassian.crowd.embedded.api.CrowdDirectoryService;
 import com.atlassian.crowd.embedded.api.Directory;
 import com.atlassian.crowd.embedded.api.DirectoryType;
 import com.atlassian.crowd.exception.DirectoryCurrentlySynchronisingException;
-import com.atlassian.crowd.model.directory.ImmutableDirectory;
+import com.atlassian.crowd.model.InternalEntityTemplate;
+import com.atlassian.crowd.model.directory.DirectoryImpl;
 import de.aservo.atlassian.confapi.exception.InternalServerErrorException;
 import de.aservo.atlassian.confapi.model.DirectoryBean;
 import de.aservo.atlassian.jira.confapi.model.util.DirectoryBeanUtil;
@@ -22,7 +23,6 @@ import java.util.Map;
 
 import static com.atlassian.crowd.directory.RemoteCrowdDirectory.*;
 import static com.atlassian.crowd.directory.SynchronisableDirectoryProperties.*;
-import static com.atlassian.crowd.directory.SynchronisableDirectoryProperties.SyncGroupMembershipsAfterAuth.WHEN_AUTHENTICATION_CREATED_THE_USER;
 import static com.atlassian.crowd.model.directory.DirectoryImpl.ATTRIBUTE_KEY_USE_NESTED_GROUPS;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -114,8 +114,19 @@ public class DirectoryServiceTest {
         attributes.put(CACHE_SYNCHRONISE_INTERVAL, "3600");
         attributes.put(ATTRIBUTE_KEY_USE_NESTED_GROUPS, "false");
         attributes.put(INCREMENTAL_SYNC_ENABLED, "true");
-        attributes.put(SYNC_GROUP_MEMBERSHIP_AFTER_SUCCESSFUL_USER_AUTH_ENABLED, WHEN_AUTHENTICATION_CREATED_THE_USER.getValue());
-        return ImmutableDirectory.builder("test", DirectoryType.CROWD, "test.class").setId(1L).setAttributes(attributes).build();
+        // TODO: FIX (how?) attributes.put(SYNC_GROUP_MEMBERSHIP_AFTER_SUCCESSFUL_USER_AUTH_ENABLED, WHEN_AUTHENTICATION_CREATED_THE_USER.getValue());
+
+        final InternalEntityTemplate internalEntityTemplate = new InternalEntityTemplate();
+        internalEntityTemplate.setId(1L);
+        internalEntityTemplate.setName("test");
+        internalEntityTemplate.setActive(true);
+
+        final DirectoryImpl directory = new DirectoryImpl(internalEntityTemplate);
+        directory.setType(DirectoryType.CROWD);
+        directory.setImplementationClass("test.class");
+        directory.setAttributes(attributes);
+
+        return directory;
     }
 
 }

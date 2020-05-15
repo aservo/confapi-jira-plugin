@@ -2,7 +2,7 @@ package de.aservo.atlassian.jira.confapi.model.util;
 
 import com.atlassian.crowd.embedded.api.Directory;
 import com.atlassian.crowd.embedded.api.DirectoryType;
-import com.atlassian.crowd.model.directory.ImmutableDirectory;
+import com.atlassian.crowd.model.directory.DirectoryImpl;
 import de.aservo.atlassian.confapi.model.DirectoryBean;
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +11,6 @@ import java.util.Map;
 
 import static com.atlassian.crowd.directory.RemoteCrowdDirectory.*;
 import static com.atlassian.crowd.directory.SynchronisableDirectoryProperties.*;
-import static com.atlassian.crowd.directory.SynchronisableDirectoryProperties.SyncGroupMembershipsAfterAuth.WHEN_AUTHENTICATION_CREATED_THE_USER;
 import static com.atlassian.crowd.model.directory.DirectoryImpl.ATTRIBUTE_KEY_USE_NESTED_GROUPS;
 
 public class DirectoryBeanUtil {
@@ -36,12 +35,13 @@ public class DirectoryBeanUtil {
         attributes.put(CACHE_SYNCHRONISE_INTERVAL, "3600");
         attributes.put(ATTRIBUTE_KEY_USE_NESTED_GROUPS, "false");
         attributes.put(INCREMENTAL_SYNC_ENABLED, "true");
-        attributes.put(SYNC_GROUP_MEMBERSHIP_AFTER_SUCCESSFUL_USER_AUTH_ENABLED, WHEN_AUTHENTICATION_CREATED_THE_USER.getValue());
+        // TODO: FIX (how?) attributes.put(SYNC_GROUP_MEMBERSHIP_AFTER_SUCCESSFUL_USER_AUTH_ENABLED, WHEN_AUTHENTICATION_CREATED_THE_USER.getValue());
 
-        return ImmutableDirectory.builder(directoryBean.getName(), DirectoryBeanUtil.getDirectoryType(directoryBean), directoryBean.getImplClass())
-                .setActive(directoryBean.isActive())
-                .setAttributes(attributes)
-                .build();
+        final DirectoryImpl directory = new DirectoryImpl(directoryBean.getName(), DirectoryBeanUtil.getDirectoryType(directoryBean), directoryBean.getImplClass());
+        directory.setActive(directoryBean.isActive());
+        directory.setAttributes(attributes);
+
+        return directory;
     }
 
     /**

@@ -120,11 +120,11 @@ workflows:
             - integration-tests
           filters:
             branches:
-              only: master
+              only: /master(?:-.+)?$/
           context: deploy-maven
       - apcc:
           requires:
             - deploy
           filters:
             branches:
-              only: master
+              only: /master(?:-.+)?$/

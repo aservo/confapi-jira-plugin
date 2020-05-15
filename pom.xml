@@ -13,7 +13,7 @@
 
     <groupId>de.aservo.atlassian</groupId>
     <artifactId>jira-confapi-plugin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2-7.2-SNAPSHOT</version>
     <packaging>atlassian-plugin</packaging>
 
     <name>ConfAPI for Jira</name>
@@ -48,7 +48,7 @@
     </developers>
 
     <properties>
-        <jira.version>8.8.1</jira.version>
+        <jira.version>7.2.15</jira.version>
         <!-- other properties -->
         <atlassian.ajp.port>8209</atlassian.ajp.port>
         <atlassian.amps.version>8.0.2</atlassian.amps.version>
@@ -241,7 +241,7 @@
 
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
