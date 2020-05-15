@@ -91,13 +91,13 @@ jobs:
           key: confapi-plugin-{{ checksum "pom.xml" }}
       - run:
           name: Download APCC
-          command: ./mvnw dependency:get -DgroupId=de.aservo -DartifactId=atlassian-plugin-compatibility-check -Dversion=0.0.1
+          command: ./mvnw dependency:get -DgroupId=de.aservo -DartifactId=atlassian-plugin-compatibility-check -Dversion=0.0.2
       - run:
           name: Copy APCC to current Directory
-          command: ./mvnw dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.1 -DoutputDirectory=.
+          command: ./mvnw dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.2 -DoutputDirectory=.
       - run:
           name: Run APCC
-          command: java -jar atlassian-plugin-compatibility-check-0.0.1.jar "jira.version"
+          command: java -jar atlassian-plugin-compatibility-check-0.0.2.jar "jira.version"
       - save_cache:
           paths:
             - ~/.m2
