@@ -36,8 +36,7 @@ jobs:
         pwd
         ls -la
         find . -name target
-        find / -name target
-        mkdir -p /tmp/artifacts && cp target/*.{jar,obr} /tmp/artifacts
+        mkdir -p /tmp/artifacts && cp /target/*.{jar,obr} /tmp/artifacts
 
     - name: Upload
       uses: actions/upload-artifact@v2
