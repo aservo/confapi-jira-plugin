@@ -1,0 +1,46 @@
+# BOB_11_ProvideTestActions
+# convert from circleci to github-actions
+
+name: Java Maven CI - Provide Test Actions
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    container:
+      image: circleci/openjdk:11-jdk # working_directory: /tmp/build
+      options: --user 1001
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: confapi-plugin-${{ hashFiles('**/pom.xml') }}
+        #restore-keys: confapi-plugin-
+
+    - name: Download Dependencies
+      run: ./mvnw dependency:go-offline -U -B
+
+    - name: Build with Maven
+      run: ./mvnw package -DskipUnitTests
+
+    - name: Stage
+      run: |
+        echo "DEBUG: List directory"
+        pwd
+        ls -la
+        find . -name target
+        find / -name target
+        mkdir -p /tmp/artifacts && cp target/*.{jar,obr} /tmp/artifacts
+
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: Package
+        path: /tmp/artifacts # /tmp/build
