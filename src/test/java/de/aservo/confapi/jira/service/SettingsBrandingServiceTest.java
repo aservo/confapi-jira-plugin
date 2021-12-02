@@ -5,6 +5,7 @@ import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.config.properties.ApplicationProperties;
 import com.atlassian.jira.config.properties.LnFDefaultColorProvider;
 import com.atlassian.jira.config.properties.LogoProvider;
+import com.atlassian.jira.config.properties.UiSettingsStateManager;
 import com.atlassian.jira.config.util.JiraHome;
 import com.atlassian.jira.lookandfeel.LogoChoice;
 import com.atlassian.jira.lookandfeel.LookAndFeelProperties;
@@ -15,6 +16,7 @@ import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import de.aservo.confapi.commons.exception.InternalServerErrorException;
 import de.aservo.confapi.commons.model.SettingsBrandingColorSchemeBean;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.easymock.PowerMock;
@@ -83,8 +85,8 @@ public class SettingsBrandingServiceTest {
     //InternalServerErrorException -> FileNotFoundException is expected because no logofile is present in the filesystem at test time
     @Test(expected = InternalServerErrorException.class)
     public void testGetLogo() {
-         settingsBrandingService.getLogo();
-         verify(uploadService).getLogoDirectory();
+        settingsBrandingService.getLogo();
+        verify(uploadService).getLogoDirectory();
     }
 
     @Test
@@ -94,6 +96,7 @@ public class SettingsBrandingServiceTest {
         expect(ComponentAccessor.getComponent(LnFDefaultColorProvider.class)).andStubReturn(mock(LnFDefaultColorProvider.class));
         expect(ComponentAccessor.getComponent(LogoProvider.class)).andStubReturn(mock(LogoProvider.class));
         expect(ComponentAccessor.getComponent(EventPublisher.class)).andStubReturn(mock(EventPublisher.class));
+        expect(ComponentAccessor.getComponent(UiSettingsStateManager.class)).andStubReturn(mock(UiSettingsStateManager.class));
         PowerMock.replay(ComponentAccessor.class);
 
         InputStream is = new ByteArrayInputStream("".getBytes());
@@ -116,6 +119,7 @@ public class SettingsBrandingServiceTest {
         expect(ComponentAccessor.getComponent(LnFDefaultColorProvider.class)).andStubReturn(mock(LnFDefaultColorProvider.class));
         expect(ComponentAccessor.getComponent(LogoProvider.class)).andStubReturn(mock(LogoProvider.class));
         expect(ComponentAccessor.getComponent(EventPublisher.class)).andStubReturn(mock(EventPublisher.class));
+        expect(ComponentAccessor.getComponent(UiSettingsStateManager.class)).andStubReturn(mock(UiSettingsStateManager.class));
         PowerMock.replay(ComponentAccessor.class);
 
         InputStream is = new ByteArrayInputStream("".getBytes());
