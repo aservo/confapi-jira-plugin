@@ -57,7 +57,7 @@
         <jira.data.version>8.12.1</jira.data.version>
         <!-- other properties -->
         <atlassian.ajp.port>8209</atlassian.ajp.port>
-        <atlassian.amps.version>8.3.0</atlassian.amps.version>
+        <atlassian.amps.version>8.3.1</atlassian.amps.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
         <confapi-commons.version>0.0.32-SNAPSHOT</confapi-commons.version>
