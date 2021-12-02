@@ -27,10 +27,10 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Download Dependencies
-      run: ./mvnw dependency:go-offline -U -B
+      run: mvn dependency:go-offline -U -B
 
     - name: Build with Maven
-      run: ./mvnw package -DskipUnitTests -B
+      run: mvn package -DskipUnitTests -B
 
   unit-tests:
     needs: package
@@ -58,7 +58,7 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Run Unit Tests and analyze on SonarCloud
-      run: ./mvnw test sonar:sonar -B
+      run: mvn test sonar:sonar -B
 
   integration-tests:
     needs: package
@@ -82,7 +82,7 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Run Integration Tests
-      run: ./mvnw integration-test -DskipUnitTests -B
+      run: mvn integration-test -DskipUnitTests -B
 
   apcc:
     needs: package
@@ -106,10 +106,10 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Download APCC
-      run: ./mvnw dependency:get -DgroupId=de.aservo -DartifactId=atlassian-plugin-compatibility-check -Dversion=0.0.2
+      run: mvn dependency:get -DgroupId=de.aservo -DartifactId=atlassian-plugin-compatibility-check -Dversion=0.0.2
 
     - name: Copy APCC to current Directory
-      run: ./mvnw dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.2 -DoutputDirectory=.
+      run: mvn dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.2 -DoutputDirectory=.
 
     - name: Run APCC
       run: java -jar atlassian-plugin-compatibility-check-0.0.2.jar "jira.version"
