@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.aservo</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>0.0.11</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -53,6 +53,16 @@
     </developers>
 
     <properties>
+        <!-- default properties -->
+        <java.version>1.8</java.version>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <!-- Atlassia SDK settings -->
+        <downloadSources>true</downloadSources>
+        <downloadJavadocs>true</downloadJavadocs>
+        <allow.google.tracking>false</allow.google.tracking>
+        <skipAllPrompts>true</skipAllPrompts>
+        <!-- Jira related properties -->
         <jira.version>8.15.0</jira.version>
         <jira.data.version>8.12.1</jira.data.version>
         <!-- other properties -->
@@ -379,7 +389,7 @@
             <plugin>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger.plugin.version}</version>
                 <configuration>
                     <openapiFilePath>${basedir}/src/main/resources/openapi.yaml</openapiFilePath>
                     <resourcePackages>
@@ -402,7 +412,7 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>${openapi-generator-maven-plugin.version}</version>
+                <version>${openapi-generator.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

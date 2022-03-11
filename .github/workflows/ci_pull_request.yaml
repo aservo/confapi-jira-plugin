@@ -30,7 +30,7 @@ jobs:
       run: ./mvnw dependency:go-offline -U -B
 
     - name: Build with Maven
-      run: ./mvnw package -DskipUnitTests -B
+      run: ./mvnw package -DskipTests=true -B
 
   unit-tests:
     needs: package
@@ -57,8 +57,14 @@ jobs:
         key: confapi-plugin-${{ hashFiles('**/pom.xml') }}
         restore-keys: confapi-plugin
 
-    - name: Run Unit Tests and analyze on SonarCloud
-      run: ./mvnw test sonar:sonar -B
+    - name: Run Unit Tests
+      run: ./mvnw --batch-mode compile test
+
+    - name: Perform static code analysis
+      run: |
+        ./mvnw --batch-mode sonar:sonar \
+           --settings ./.github/workflows/settings.xml \
+           -P resolving,analyzing,defaults
 
   integration-tests:
     needs: package
@@ -82,7 +88,7 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Run Integration Tests
-      run: ./mvnw integration-test -DskipUnitTests -B
+      run: ./mvnw integration-test -DskipTests=true -B
 
   apcc:
     needs: package
