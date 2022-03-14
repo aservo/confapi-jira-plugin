@@ -30,7 +30,7 @@ jobs:
       run: ./mvnw dependency:go-offline -U -B
 
     - name: Build with Maven
-      run: ./mvnw package -DskipUnitTests -B
+      run: ./mvnw package -DskipTests=true -B
 
   unit-tests:
     needs: package
@@ -57,8 +57,14 @@ jobs:
         key: confapi-plugin-${{ hashFiles('**/pom.xml') }}
         restore-keys: confapi-plugin
 
-    - name: Run Unit Tests and analyze on SonarCloud
-      run: ./mvnw test sonar:sonar -B
+    - name: Run Unit Tests
+      run: ./mvnw --batch-mode compile test
+
+    - name: Perform static code analysis
+      run: |
+        ./mvnw --batch-mode sonar:sonar \
+           --settings ./.github/workflows/settings.xml \
+           -P resolving,analyzing,defaults
 
   integration-tests:
     needs: package
@@ -82,7 +88,7 @@ jobs:
         restore-keys: confapi-plugin
 
     - name: Run Integration Tests
-      run: ./mvnw integration-test -DskipUnitTests -B
+      run: ./mvnw integration-test -B
 
   deploy:
     needs: [unit-tests, integration-tests]
@@ -90,13 +96,11 @@ jobs:
     runs-on: ubuntu-20.04
 
     env:
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      GPG_KEY_BASE64: ${{ secrets.GPG_KEY_BASE64 }}
       GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      SIGN_ASC_SALT: ${{ secrets.SIGN_ASC_SALT }}
-      SIGN_ASC_KEY: ${{ secrets.SIGN_ASC_KEY }}
-      SIGN_ASC_IV: ${{ secrets.SIGN_ASC_IV }}
 
     steps:
     - name: Set up JDK 11
@@ -114,14 +118,15 @@ jobs:
         key: confapi-plugin-${{ hashFiles('**/pom.xml') }}
         restore-keys: confapi-plugin
 
-    - name: Decrypt Signing Key
-      run: openssl aes-256-cbc -S ${SIGN_ASC_SALT} -K ${SIGN_ASC_KEY} -iv ${SIGN_ASC_IV} -in .github/workflows/sign.asc.enc -out .github/workflows/sign.asc -d
+    - name: Import GPG key
+      run: echo "${GPG_KEY_BASE64}" | base64 --decode | gpg --no-tty --batch --import
 
-    - name: Import Signing Key
-      run: gpg --no-tty --batch --import .github/workflows/sign.asc
-
-    - name: Deploy to Maven Central
-      run: export GPG_TTY=$(tty) && ./mvnw -s .github/workflows/settings.xml -DskipTests deploy -B
+    - name: Publish
+      run: |
+          ./mvnw --batch-mode deploy \
+            --settings ./.github/workflows/settings.xml \
+            -P resolving,signing,deploying,defaults \
+            -DskipTests=true
 
   apcc:
     needs: deploy
