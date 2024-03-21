@@ -686,6 +686,332 @@ ifdef::internal-generation[]
 endif::internal-generation[]
 
 
+[.Authentication]
+=== Authentication
+
+
+[.getAuthenticationIdps]
+==== getAuthenticationIdps
+
+`GET /authentication/idps`
+
+Get all authentication identity providers
+
+===== Description
+
+
+
+
+// markup not found, no include::{specDir}authentication/idps/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<AuthenticationIdpsBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.HTTP Response Codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Returns all authentication identity providers.
+|  <<AuthenticationIdpsBean>>
+
+
+| 0
+| Returns a list of error messages.
+|  <<ErrorCollection>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}authentication/idps/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}authentication/idps/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :authentication/idps/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}authentication/idps/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getAuthenticationSso]
+==== getAuthenticationSso
+
+`GET /authentication/sso`
+
+Get authentication SSO configuration
+
+===== Description
+
+
+
+
+// markup not found, no include::{specDir}authentication/sso/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<AuthenticationSsoBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.HTTP Response Codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Returns the authentication SSO configuration.
+|  <<AuthenticationSsoBean>>
+
+
+| 0
+| Returns a list of error messages.
+|  <<ErrorCollection>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}authentication/sso/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}authentication/sso/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :authentication/sso/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}authentication/sso/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setAuthenticationIdps]
+==== setAuthenticationIdps
+
+`PATCH /authentication/idps`
+
+Set all authentication identity providers
+
+===== Description
+
+
+
+
+// markup not found, no include::{specDir}authentication/idps/PATCH/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+====== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| AuthenticationIdpsBean
+|  <<AuthenticationIdpsBean>>
+| -
+| 
+| 
+
+|===
+
+
+
+
+
+===== Return Type
+
+<<AuthenticationIdpsBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.HTTP Response Codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Returns the set authentication identity providers.
+|  <<AuthenticationIdpsBean>>
+
+
+| 0
+| Returns a list of error messages.
+|  <<ErrorCollection>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}authentication/idps/PATCH/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}authentication/idps/PATCH/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :authentication/idps/PATCH/PATCH.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}authentication/idps/PATCH/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setAuthenticationSso]
+==== setAuthenticationSso
+
+`PATCH /authentication/sso`
+
+Set authentication SSO configuration
+
+===== Description
+
+
+
+
+// markup not found, no include::{specDir}authentication/sso/PATCH/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+====== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===
+|Name| Description| Required| Default| Pattern
+
+| AuthenticationSsoBean
+|  <<AuthenticationSsoBean>>
+| -
+| 
+| 
+
+|===
+
+
+
+
+
+===== Return Type
+
+<<AuthenticationSsoBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.HTTP Response Codes
+[cols="2,3,1"]
+|===
+| Code | Message | Datatype
+
+
+| 200
+| Returns the set authentication SSO configuration.
+|  <<AuthenticationSsoBean>>
+
+
+| 0
+| Returns a list of error messages.
+|  <<ErrorCollection>>
+
+|===
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}authentication/sso/PATCH/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}authentication/sso/PATCH/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :authentication/sso/PATCH/PATCH.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}authentication/sso/PATCH/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
 [.Directories]
 === Directories
 
@@ -2697,6 +3023,141 @@ endif::internal-generation[]
 | applicationLinks
 | 
 | List  of <<ApplicationLinkBean>>
+| 
+|  
+
+|===
+
+
+[#AuthenticationIdpOidcBean]
+=== _AuthenticationIdpOidcBean_ 
+
+
+
+[.fields-AuthenticationIdpOidcBean]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| id
+| 
+| Long 
+| 
+| int64 
+
+| name
+| 
+| String 
+| 
+|  
+
+| enabled
+| 
+| Boolean 
+| 
+|  
+
+| url
+| 
+| String 
+| 
+|  
+
+| enableRememberMe
+| 
+| Boolean 
+| 
+|  
+
+| buttonText
+| 
+| String 
+| 
+|  
+
+| clientId
+| 
+| String 
+| 
+|  
+
+| clientSecret
+| 
+| String 
+| 
+|  
+
+| usernameClaim
+| 
+| String 
+| 
+|  
+
+| additionalScopes
+| 
+| List  of <<string>>
+| 
+|  
+
+| discoveryEnabled
+| 
+| Boolean 
+| 
+|  
+
+| authorizationEndpoint
+| 
+| String 
+| 
+|  
+
+| tokenEndpoint
+| 
+| String 
+| 
+|  
+
+| userInfoEndpoint
+| 
+| String 
+| 
+|  
+
+|===
+
+
+[#AuthenticationIdpsBean]
+=== _AuthenticationIdpsBean_ 
+
+
+
+[.fields-AuthenticationIdpsBean]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| authenticationIdpBeans
+| 
+| List  of <<AuthenticationIdpOidcBean>>
+| 
+|  
+
+|===
+
+
+[#AuthenticationSsoBean]
+=== _AuthenticationSsoBean_ 
+
+
+
+[.fields-AuthenticationSsoBean]
+[cols="2,1,2,4,1"]
+|===
+| Field Name| Required| Type| Description| Format
+
+| showOnLogin
+| 
+| Boolean 
 | 
 |  
 
