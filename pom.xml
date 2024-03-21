@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>confapi-jira-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>atlassian-plugin</packaging>
 
     <name>ConfAPI for Jira</name>
